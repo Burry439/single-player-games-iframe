@@ -1,0 +1,12 @@
+{
+  "type": "node",
+  "request": "launch",
+  "remoteRoot": "${workspaceRoot}/games/Single Player Games/build",
+  "name": "Lanuch full nodemon",
+  "runtimeExecutable": "nodemon",
+  "program": "${workspaceFolder}/games/Single Player Games/index.ts",
+  "restart": true,
+  "sourceMaps": true,
+  "console": "internalConsole",
+  "internalConsoleOptions": "neverOpen"
+}

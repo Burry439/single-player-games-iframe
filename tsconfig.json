@@ -1,0 +1,23 @@
+{
+    "compileOnSave": true,
+    
+    "compilerOptions": {
+      "target": "es5",                          
+      "module": "commonjs", 
+      "sourceMap":  true,                   
+      "lib": ["es6"],                     
+      "allowJs": true,
+      "declaration": false,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "watch": true,
+      "outDir": "./build",                          
+      "rootDir": "./src",
+      "strict": false,         
+      "noImplicitAny": true,
+      "esModuleInterop": true,
+      "resolveJsonModule": true,
+      "skipLibCheck": true
+    }
+  }
+  
