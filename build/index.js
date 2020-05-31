@@ -19,7 +19,7 @@ var ExpressServer = /** @class */ (function () {
         //this.app.use(this.router)
         this.app.use('/', express_1.default.static('build/games'));
         this.server = http_1.default.createServer(this.app);
-        this.server.listen(8000);
+        this.server.listen(process.env.PORT || 8000);
         this.socketInstance = socketInstance_1.default.getSocketInstance(this.server);
         console.log('=====================================');
         console.log('SERVER SETTINGSbbbb:');

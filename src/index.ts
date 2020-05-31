@@ -22,7 +22,7 @@ class ExpressServer {
     this.app.use( '/', express.static('build/games'))
     
     this.server   = http.createServer ( this.app )
-    this.server.listen ( 8000 )
+    this.server.listen ( process.env.PORT || 8000)
     this.socketInstance = SocketInstance.getSocketInstance(this.server) 
 
     console.log ( '=====================================' )
