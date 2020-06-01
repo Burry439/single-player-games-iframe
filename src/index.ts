@@ -19,6 +19,7 @@ class ExpressServer {
     this.app.use ( bodyParser.urlencoded ( { 'extended' : true , 'limit' : '50mb' } ) )
     this.app.use ( cors ( { 'origin' : '*' , 'methods' : [ '*' , 'DELETE' , 'GET' , 'OPTIONS' , 'PATCH' , 'POST' ] , 'allowedHeaders' : [ '*' , 'authorization' , 'content-type' ] } ) )
     //this.app.use(this.router)
+
     this.app.use( '/', express.static('build/games'))
     
     this.server   = http.createServer ( this.app )

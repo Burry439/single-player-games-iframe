@@ -27,18 +27,13 @@ export default class Game {
         })
     }
 
-    public addUnitySocketToGameConnectionAndGetId(gameName : string, socket : SocketIO.Socket){
-        let id : string = "0"
+    public addUnitySocketToGameConnection(gameData : any, socket : SocketIO.Socket){
         const foundIndex = this.gameConnections.findIndex((gameConnection) => {
-            return gameConnection.roomData.gameName == gameName && gameConnection.unitySocket == null
+            return gameConnection.roomData.gameName == gameData.gameName && gameConnection.unitySocket == null && gameConnection.roomData.userId == gameData.userId
         });
         if(foundIndex >= 0){
            this.gameConnections[foundIndex].unitySocket = socket;
-           id = this.gameConnections[foundIndex].roomData.userId
-        }
-
-        return id;
-        
+        }        
     }
 
     public isDuplicate(userId : string){

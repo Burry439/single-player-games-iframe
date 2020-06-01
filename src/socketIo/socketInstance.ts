@@ -26,11 +26,11 @@ export default class SocketInstance {
                 new ReactSocketListener(socket, roomData)
             })
 
-            socket.on("UnityConnection",async (gameName : any) =>{
-                console.log("rsUnityConnection", gameName)
-                const gameData = await this.getGameData(gameName.name)
+            socket.on("UnityConnection",async (unityData : any) =>{
+                console.log("UnityConnection", unityData)
+                const gameData = await this.getGameData(unityData.name)
                 console.log("gameData: ", gameData)
-                new UnitySocketListener(socket, gameData)
+                new UnitySocketListener(socket, gameData, unityData.userId)
             })
         })
     }

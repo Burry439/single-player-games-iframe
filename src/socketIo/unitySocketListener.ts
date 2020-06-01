@@ -6,31 +6,27 @@ export default class UnitySocketListener {
     socket : SocketIO.Socket
     gameData : GameData
     gameInstance : Game
-    userId : string = "0"
     apiRequest : ApiRequest
-    constructor(_socket : SocketIO.Socket, _gameData : any){
-
+    constructor(_socket : SocketIO.Socket, _gameData : any, _userId : string){
         this.socket = _socket
-     
         this.gameInstance = Game.getGameInstance()
-        this.apiRequest = ApiRequest.getApiRequestInstance();
-        
+        this.apiRequest = ApiRequest.getApiRequestInstance(); 
         // add this game instance and get the user Id for the room name
-        const userId: string = this.gameInstance.addUnitySocketToGameConnectionAndGetId(_gameData.name, this.socket);
-
+        
+        console.log(_userId)
         //if thee are no avalible react clients
-        if(userId == "0"){
+        if(!_userId){
             console.log("in if no id if")
             this.socket.emit("sendToErrorPage",{})
         } else {
             console.log("in else")
+            this.gameInstance.addUnitySocketToGameConnection(_gameData, this.socket);
             this.gameData = {
                 id:  _gameData._id,
                 name: _gameData.name,              
-                userId: userId
+                userId:  _userId
             }
-            //set user id
-            //join roomSS
+
             this.socket.join(this.gameData.name + "/" + this.gameData.userId)
             console.log("game data: ",this.gameData)
             //send game info to unity client
@@ -42,6 +38,7 @@ export default class UnitySocketListener {
                     const res = await this.apiRequest.post("game","challengeCompleted", challenge)
                     console.log(res.data)
                     if(res.data){
+                        console.log(this.gameData.name + "/" + this.gameData.userId)
                         //send to react
                         this.socket.to(this.gameData.name + "/" + this.gameData.userId).emit("challengeCompleted", res.data)
                     }else{

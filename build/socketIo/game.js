@@ -19,16 +19,13 @@ var Game = /** @class */ (function () {
             }
         });
     };
-    Game.prototype.addUnitySocketToGameConnectionAndGetId = function (gameName, socket) {
-        var id = "0";
+    Game.prototype.addUnitySocketToGameConnection = function (gameData, socket) {
         var foundIndex = this.gameConnections.findIndex(function (gameConnection) {
-            return gameConnection.roomData.gameName == gameName && gameConnection.unitySocket == null;
+            return gameConnection.roomData.gameName == gameData.gameName && gameConnection.unitySocket == null && gameConnection.roomData.userId == gameData.userId;
         });
         if (foundIndex >= 0) {
             this.gameConnections[foundIndex].unitySocket = socket;
-            id = this.gameConnections[foundIndex].roomData.userId;
         }
-        return id;
     };
     Game.prototype.isDuplicate = function (userId) {
         var isDuplicate = false;

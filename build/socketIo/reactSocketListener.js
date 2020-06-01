@@ -12,6 +12,7 @@ var ReactSocketListener = /** @class */ (function () {
         this.roomData = _roomData;
         this.gameInstance = game_1.default.getGameInstance();
         if (!this.gameInstance.isDuplicate(this.roomData.userId)) {
+            console.log(this.roomData.gameName + "/" + this.roomData.userId);
             this.socket.join(this.roomData.gameName + "/" + this.roomData.userId);
             this.gameInstance.addGameConnection({
                 roomData: {

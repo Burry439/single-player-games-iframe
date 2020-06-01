@@ -42,28 +42,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var game_1 = __importDefault(require("./game"));
 var apiRequest_1 = __importDefault(require("../helperClasses/apiRequest"));
 var UnitySocketListener = /** @class */ (function () {
-    function UnitySocketListener(_socket, _gameData) {
+    function UnitySocketListener(_socket, _gameData, _userId) {
         var _this = this;
-        this.userId = "0";
         this.socket = _socket;
         this.gameInstance = game_1.default.getGameInstance();
         this.apiRequest = apiRequest_1.default.getApiRequestInstance();
         // add this game instance and get the user Id for the room name
-        var userId = this.gameInstance.addUnitySocketToGameConnectionAndGetId(_gameData.name, this.socket);
+        console.log(_userId);
         //if thee are no avalible react clients
-        if (userId == "0") {
+        if (!_userId) {
             console.log("in if no id if");
             this.socket.emit("sendToErrorPage", {});
         }
         else {
             console.log("in else");
+            this.gameInstance.addUnitySocketToGameConnection(_gameData, this.socket);
             this.gameData = {
                 id: _gameData._id,
                 name: _gameData.name,
-                userId: userId
+                userId: _userId
             };
-            //set user id
-            //join roomSS
             this.socket.join(this.gameData.name + "/" + this.gameData.userId);
             console.log("game data: ", this.gameData);
             //send game info to unity client
@@ -79,6 +77,7 @@ var UnitySocketListener = /** @class */ (function () {
                             res = _a.sent();
                             console.log(res.data);
                             if (res.data) {
+                                console.log(this.gameData.name + "/" + this.gameData.userId);
                                 //send to react
                                 this.socket.to(this.gameData.name + "/" + this.gameData.userId).emit("challengeCompleted", res.data);
                             }
