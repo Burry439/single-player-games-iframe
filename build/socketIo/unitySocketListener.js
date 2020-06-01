@@ -42,44 +42,38 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var game_1 = __importDefault(require("./game"));
 var apiRequest_1 = __importDefault(require("../helperClasses/apiRequest"));
 var UnitySocketListener = /** @class */ (function () {
-    function UnitySocketListener(_socket, _gameData, _userId) {
+    function UnitySocketListener(_socket, _roomData) {
         var _this = this;
         this.socket = _socket;
         this.gameInstance = game_1.default.getGameInstance();
         this.apiRequest = apiRequest_1.default.getApiRequestInstance();
+        this.roomData = _roomData;
         // add this game instance and get the user Id for the room name
-        console.log(_userId);
+        console.log(_roomData);
         //if thee are no avalible react clients
-        if (!_userId) {
+        if (!_roomData.userId) {
             console.log("in if no id if");
             this.socket.emit("sendToErrorPage", {});
         }
         else {
             console.log("in else");
-            this.gameInstance.addUnitySocketToGameConnection(_gameData, this.socket);
-            this.gameData = {
-                id: _gameData._id,
-                name: _gameData.name,
-                userId: _userId
-            };
-            this.socket.join(this.gameData.name + "/" + this.gameData.userId);
-            console.log("game data: ", this.gameData);
+            this.gameInstance.addUnitySocketToGameConnection(_roomData, this.socket);
+            this.socket.join(this.roomData.gameName + "/" + this.roomData.userId);
             //send game info to unity client
-            this.socket.emit("connectedToServer", this.gameData);
-            this.socket.on("challengeCompleted", function (challenge) { return __awaiter(_this, void 0, void 0, function () {
+            //this.socket.emit("connectedToServer",this.gameData)
+            this.socket.on("challengeCompleted", function (challengeData) { return __awaiter(_this, void 0, void 0, function () {
                 var res, e_1;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
                             _a.trys.push([0, 2, , 3]);
-                            return [4 /*yield*/, this.apiRequest.post("game", "challengeCompleted", challenge)];
+                            return [4 /*yield*/, this.apiRequest.post("challenge", "challengeCompleted", challengeData)];
                         case 1:
                             res = _a.sent();
                             console.log(res.data);
                             if (res.data) {
-                                console.log(this.gameData.name + "/" + this.gameData.userId);
                                 //send to react
-                                this.socket.to(this.gameData.name + "/" + this.gameData.userId).emit("challengeCompleted", res.data);
+                                this.socket.to(this.roomData.gameName + "/" + this.roomData.userId).emit("challengeCompleted", res.data);
                             }
                             else {
                                 console.log("challenge already completed");

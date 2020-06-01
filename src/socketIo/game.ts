@@ -1,5 +1,6 @@
 
 import { gameConnection } from "../interfaces/gameConnection";
+import RoomData from "../interfaces/roomData";
 
 export default class Game {
 
@@ -27,9 +28,9 @@ export default class Game {
         })
     }
 
-    public addUnitySocketToGameConnection(gameData : any, socket : SocketIO.Socket){
+    public addUnitySocketToGameConnection(roomData : RoomData, socket : SocketIO.Socket){
         const foundIndex = this.gameConnections.findIndex((gameConnection) => {
-            return gameConnection.roomData.gameName == gameData.gameName && gameConnection.unitySocket == null && gameConnection.roomData.userId == gameData.userId
+            return gameConnection.roomData.gameName == roomData.gameName && gameConnection.unitySocket == null && gameConnection.roomData.userId == roomData.userId
         });
         if(foundIndex >= 0){
            this.gameConnections[foundIndex].unitySocket = socket;

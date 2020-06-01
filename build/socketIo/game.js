@@ -19,9 +19,9 @@ var Game = /** @class */ (function () {
             }
         });
     };
-    Game.prototype.addUnitySocketToGameConnection = function (gameData, socket) {
+    Game.prototype.addUnitySocketToGameConnection = function (roomData, socket) {
         var foundIndex = this.gameConnections.findIndex(function (gameConnection) {
-            return gameConnection.roomData.gameName == gameData.gameName && gameConnection.unitySocket == null && gameConnection.roomData.userId == gameData.userId;
+            return gameConnection.roomData.gameName == roomData.gameName && gameConnection.unitySocket == null && gameConnection.roomData.userId == roomData.userId;
         });
         if (foundIndex >= 0) {
             this.gameConnections[foundIndex].unitySocket = socket;

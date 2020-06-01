@@ -2,45 +2,39 @@ import Game from "./game";
 import RoomData from "../interfaces/roomData";
 import ApiRequest from "../helperClasses/apiRequest";
 import { GameData } from "../interfaces/gameData";
+import ChallengeData from "../interfaces/challengeData";
 export default class UnitySocketListener {
     socket : SocketIO.Socket
-    gameData : GameData
+    roomData : RoomData
     gameInstance : Game
     apiRequest : ApiRequest
-    constructor(_socket : SocketIO.Socket, _gameData : any, _userId : string){
+    constructor(_socket : SocketIO.Socket, _roomData : RoomData){
         this.socket = _socket
         this.gameInstance = Game.getGameInstance()
         this.apiRequest = ApiRequest.getApiRequestInstance(); 
+        this.roomData = _roomData;
         // add this game instance and get the user Id for the room name
         
-        console.log(_userId)
+        console.log(_roomData)
         //if thee are no avalible react clients
-        if(!_userId){
+        if(!_roomData.userId){
             console.log("in if no id if")
             this.socket.emit("sendToErrorPage",{})
         } else {
             console.log("in else")
-            this.gameInstance.addUnitySocketToGameConnection(_gameData, this.socket);
-            this.gameData = {
-                id:  _gameData._id,
-                name: _gameData.name,              
-                userId:  _userId
-            }
+            this.gameInstance.addUnitySocketToGameConnection(_roomData, this.socket);
+            this.socket.join(this.roomData.gameName + "/" + this.roomData.userId)
 
-            this.socket.join(this.gameData.name + "/" + this.gameData.userId)
-            console.log("game data: ",this.gameData)
             //send game info to unity client
-            this.socket.emit("connectedToServer",this.gameData)
+            //this.socket.emit("connectedToServer",this.gameData)
     
-            this.socket.on("challengeCompleted", async (challenge : any) =>{
+            this.socket.on("challengeCompleted", async (challengeData : ChallengeData) =>{
                 try{
-                    
-                    const res = await this.apiRequest.post("game","challengeCompleted", challenge)
+                    const res = await this.apiRequest.post("challenge","challengeCompleted", challengeData)
                     console.log(res.data)
                     if(res.data){
-                        console.log(this.gameData.name + "/" + this.gameData.userId)
                         //send to react
-                        this.socket.to(this.gameData.name + "/" + this.gameData.userId).emit("challengeCompleted", res.data)
+                        this.socket.to(this.roomData.gameName + "/" + this.roomData.userId).emit("challengeCompleted", res.data)
                     }else{
                         console.log("challenge already completed")
                     }

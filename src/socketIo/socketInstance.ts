@@ -22,29 +22,26 @@ export default class SocketInstance {
             console.log("connection")
 
             socket.on("ReactConnected",(roomData : RoomData) =>{
-
                 new ReactSocketListener(socket, roomData)
             })
 
-            socket.on("UnityConnection",async (unityData : any) =>{
-                console.log("UnityConnection", unityData)
-                const gameData = await this.getGameData(unityData.name)
-                console.log("gameData: ", gameData)
-                new UnitySocketListener(socket, gameData, unityData.userId)
+            socket.on("UnityConnection",async (roomData : RoomData) =>{
+                //const gameData = await this.getGameData(roomData.gameName)
+                new UnitySocketListener(socket, roomData)
             })
         })
     }
 
-    public async getGameData  (gameName : string){
-        try{
-            const res = await this.apiRequest.get("game", `getGame/?gameName=${gameName}`)
-            console.log(res.data)
-            return res.data;
-        }catch(e){
-            console.log(e)
-        }
+    // public async getGameData  (gameName : string){
+    //     try{
+    //         const res = await this.apiRequest.get("game", `getGame/?gameName=${gameName}`)
+    //         console.log(res.data)
+    //         return res.data;
+    //     }catch(e){
+    //         console.log(e)
+    //     }
      
-    }
+    // }
 
     public static getSocketInstance(server : Server) : SocketInstance { 
         if(!SocketInstance.SocketInstance){
