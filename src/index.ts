@@ -27,8 +27,7 @@ class ExpressServer {
     this.socketInstance = SocketInstance.getSocketInstance(this.server) 
 
     console.log ( '=====================================' )
-    console.log ( 'it worked' )
-    console.log ( 'SERVER SETTINGSbbbb:' )
+    console.log ( 'SERVER SETTINGS:' )
     console.log ( `Server running at - localhost:8000`)
     console.log ( '=====================================' )
   }
