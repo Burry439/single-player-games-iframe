@@ -22,6 +22,7 @@ var ExpressServer = /** @class */ (function () {
         this.server.listen(process.env.PORT || 8000);
         this.socketInstance = socketInstance_1.default.getSocketInstance(this.server);
         console.log('=====================================');
+        console.log('it worked');
         console.log('SERVER SETTINGSbbbb:');
         console.log("Server running at - localhost:8000");
         console.log('=====================================');

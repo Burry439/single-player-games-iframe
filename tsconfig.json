@@ -10,7 +10,7 @@
       "declaration": false,
       "experimentalDecorators": true,
       "emitDecoratorMetadata": true,
-      "watch": true,
+      "watch": false,
       "outDir": "./build",                          
       "rootDir": "./src",
       "strict": false,         
