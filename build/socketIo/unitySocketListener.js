@@ -70,7 +70,6 @@ var UnitySocketListener = /** @class */ (function () {
                             return [4 /*yield*/, this.apiRequest.post("challenge", "challengeCompleted", challengeData)];
                         case 1:
                             res = _a.sent();
-                            console.log(res.data);
                             if (res.data) {
                                 //send to react
                                 this.socket.to(this.roomData.gameName + "/" + this.roomData.userId).emit("challengeCompleted", res.data);

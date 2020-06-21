@@ -31,7 +31,6 @@ export default class UnitySocketListener {
             this.socket.on("challengeCompleted", async (challengeData : ChallengeData) =>{
                 try{
                     const res = await this.apiRequest.post("challenge","challengeCompleted", challengeData)
-                    console.log(res.data)
                     if(res.data){
                         //send to react
                         this.socket.to(this.roomData.gameName + "/" + this.roomData.userId).emit("challengeCompleted", res.data)
