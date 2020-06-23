@@ -19,7 +19,7 @@ var ExpressServer = /** @class */ (function () {
         this.app.use(cors_1.default({ 'origin': '*', 'methods': ['*', 'DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST'], 'allowedHeaders': ['*', 'authorization', 'content-type'] }));
         //this.app.use(this.router)
         this.app.use('/', express_1.default.static('build/games'));
-        this.app.get("/games/*", function (req, res) {
+        this.app.get("*", function (req, res) {
             res.sendFile(path_1.default.join("build/errorPage/error.html"), { root: process.env.ROOT_FOLDER });
         });
         this.server = http_1.default.createServer(this.app);

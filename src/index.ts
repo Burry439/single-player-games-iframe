@@ -22,7 +22,7 @@ class ExpressServer {
 
     this.app.use( '/', express.static('build/games'))
     
-    this.app.get("/games/*",(req,res) =>{
+    this.app.get("*",(req,res) =>{
       res.sendFile(path.join("build/errorPage/error.html"),{ root: process.env.ROOT_FOLDER })
     })
 
