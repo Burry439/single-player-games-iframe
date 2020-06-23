@@ -20,7 +20,7 @@ class ExpressServer {
     this.app.use ( cors ( { 'origin' : '*' , 'methods' : [ '*' , 'DELETE' , 'GET' , 'OPTIONS' , 'PATCH' , 'POST' ] , 'allowedHeaders' : [ '*' , 'authorization' , 'content-type' ] } ) )
     //this.app.use(this.router)
 
-    this.app.use( '/', express.static('build/games'))
+    this.app.use( '/games', express.static('build/games'))
     
     this.app.get("/*",(req,res) =>{
       res.sendFile(path.join("build/errorPage/error.html"),{ root: process.env.ROOT_FOLDER })
