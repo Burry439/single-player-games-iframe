@@ -22,6 +22,10 @@ class ExpressServer {
 
     this.app.use( '/', express.static('build/games'))
     
+    this.app.get("/*",(req,res) =>{
+      res.sendFile(path.join("build/errorPage/error.html"),{ root: process.env.ROOT_FOLDER })
+    })
+
     this.server   = http.createServer ( this.app )
     this.server.listen ( process.env.PORT || 8000)
     this.socketInstance = SocketInstance.getSocketInstance(this.server) 

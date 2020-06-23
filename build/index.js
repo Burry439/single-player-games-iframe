@@ -8,6 +8,7 @@ var http_1 = __importDefault(require("http"));
 var body_parser_1 = __importDefault(require("body-parser"));
 var cors_1 = __importDefault(require("cors"));
 var dotenv_1 = __importDefault(require("dotenv"));
+var path_1 = __importDefault(require("path"));
 var socketInstance_1 = __importDefault(require("./socketIo/socketInstance"));
 dotenv_1.default.config();
 var ExpressServer = /** @class */ (function () {
@@ -18,6 +19,9 @@ var ExpressServer = /** @class */ (function () {
         this.app.use(cors_1.default({ 'origin': '*', 'methods': ['*', 'DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST'], 'allowedHeaders': ['*', 'authorization', 'content-type'] }));
         //this.app.use(this.router)
         this.app.use('/', express_1.default.static('build/games'));
+        this.app.get("/*", function (req, res) {
+            res.sendFile(path_1.default.join("build/errorPage/error.html"), { root: process.env.ROOT_FOLDER });
+        });
         this.server = http_1.default.createServer(this.app);
         this.server.listen(process.env.PORT || 8000);
         this.socketInstance = socketInstance_1.default.getSocketInstance(this.server);
