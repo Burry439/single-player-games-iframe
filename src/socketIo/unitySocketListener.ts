@@ -17,39 +17,28 @@ export default class UnitySocketListener {
         this.apiRequest = ApiRequest.getApiRequestInstance(); 
         this.roomData = _roomData;
         this.gameData = _gameData
-        
-        //if thee are no avalible react clients
         if(!_roomData.userId){
-            console.log("in if no id if")
             this.socket.emit("sendToErrorPage",{})
         } else {
             console.log("in else")
             this.gameInstance.addUnitySocketToGameConnection(_roomData, this.socket);
             this.socket.join(this.roomData.gameName + "/" + this.roomData.userId)
-            //tells only react
             this.socket.to(this.roomData.gameName + "/" + this.roomData.userId).emit("gameReady")
-            console.log("gameData: ", this.gameData)
             this.socket.emit("reciveGameData", this.gameData)
-            //send game info to unity client
-            
-    
             this.socket.on("challengeCompleted", async (challengeData : ChallengeData) =>{
-                try{
-                    const challengeComplete : ChallengeComplete = {
-                        userId : this.roomData.userId,
-                        challenge : challengeData
-                    }
-                    const res = await this.apiRequest.post("challenge","challengeCompleted", challengeComplete)
-                    if(res.data){
-                        //send to react
-                        this.socket.to(this.roomData.gameName + "/" + this.roomData.userId).emit("challengeCompleted", res.data)
-                    }else{
-                        console.log("challenge already completed")
-                    }
-                    
-                }catch(e){
-                    console.log(e)
+            try{
+                const challengeComplete : ChallengeComplete = {
+                    userId : this.roomData.userId,
+                    challenge : challengeData
                 }
+                const res = await this.apiRequest.post("challenge","challengeCompleted", challengeComplete)
+                if(res.data){
+                    //send to react
+                    this.socket.to(this.roomData.gameName + "/" + this.roomData.userId).emit("challengeCompleted", res.data)
+                }
+            }catch(e){
+                console.log(e)
+            }
             })
         }
     }
