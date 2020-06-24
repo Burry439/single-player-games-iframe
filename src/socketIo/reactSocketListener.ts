@@ -24,7 +24,6 @@ export default class ReactSocketListener {
                 unitySocket : null
             })
             this.userId = this.roomData.userId;
-            this.socket.emit("gameReady")
         } else {
             this.socket.emit('isDuplicate')
         }

@@ -53,26 +53,45 @@ var SocketInstance = /** @class */ (function () {
         this.io.on("connection", function (socket) {
             console.log("connection");
             socket.on("ReactConnected", function (roomData) {
+                console.log("react connected");
                 new reactSocketListener_1.default(socket, roomData);
             });
             socket.on("UnityConnection", function (roomData) { return __awaiter(_this, void 0, void 0, function () {
+                var gameData;
                 return __generator(this, function (_a) {
-                    //const gameData = await this.getGameData(roomData.gameName)
-                    new unitySocketListener_1.default(socket, roomData);
-                    return [2 /*return*/];
+                    switch (_a.label) {
+                        case 0:
+                            console.log("unity connected");
+                            return [4 /*yield*/, this.getGameData(roomData.gameName)];
+                        case 1:
+                            gameData = _a.sent();
+                            new unitySocketListener_1.default(socket, roomData, gameData);
+                            return [2 /*return*/];
+                    }
                 });
             }); });
         });
     }
-    // public async getGameData  (gameName : string){
-    //     try{
-    //         const res = await this.apiRequest.get("game", `getGame/?gameName=${gameName}`)
-    //         console.log(res.data)
-    //         return res.data;
-    //     }catch(e){
-    //         console.log(e)
-    //     }
-    // }
+    SocketInstance.prototype.getGameData = function (gameName) {
+        return __awaiter(this, void 0, void 0, function () {
+            var res, e_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this.apiRequest.get("game", "getGame/?gameName=" + gameName)];
+                    case 1:
+                        res = _a.sent();
+                        return [2 /*return*/, res.data];
+                    case 2:
+                        e_1 = _a.sent();
+                        console.log(e_1);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
     SocketInstance.getSocketInstance = function (server) {
         if (!SocketInstance.SocketInstance) {
             SocketInstance.SocketInstance = new SocketInstance(server);

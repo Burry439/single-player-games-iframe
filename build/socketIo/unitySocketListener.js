@@ -42,14 +42,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var game_1 = __importDefault(require("./game"));
 var apiRequest_1 = __importDefault(require("../helperClasses/apiRequest"));
 var UnitySocketListener = /** @class */ (function () {
-    function UnitySocketListener(_socket, _roomData) {
+    function UnitySocketListener(_socket, _roomData, _gameData) {
         var _this = this;
         this.socket = _socket;
         this.gameInstance = game_1.default.getGameInstance();
         this.apiRequest = apiRequest_1.default.getApiRequestInstance();
         this.roomData = _roomData;
-        // add this game instance and get the user Id for the room name
-        console.log(_roomData);
+        this.gameData = _gameData;
         //if thee are no avalible react clients
         if (!_roomData.userId) {
             console.log("in if no id if");
@@ -59,15 +58,22 @@ var UnitySocketListener = /** @class */ (function () {
             console.log("in else");
             this.gameInstance.addUnitySocketToGameConnection(_roomData, this.socket);
             this.socket.join(this.roomData.gameName + "/" + this.roomData.userId);
+            //tells only react
+            this.socket.to(this.roomData.gameName + "/" + this.roomData.userId).emit("gameReady");
+            console.log("gameData: ", this.gameData);
+            this.socket.emit("reciveGameData", this.gameData);
             //send game info to unity client
-            //this.socket.emit("connectedToServer",this.gameData)
             this.socket.on("challengeCompleted", function (challengeData) { return __awaiter(_this, void 0, void 0, function () {
-                var res, e_1;
+                var challengeComplete, res, e_1;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
                             _a.trys.push([0, 2, , 3]);
-                            return [4 /*yield*/, this.apiRequest.post("challenge", "challengeCompleted", challengeData)];
+                            challengeComplete = {
+                                userId: this.roomData.userId,
+                                challenge: challengeData
+                            };
+                            return [4 /*yield*/, this.apiRequest.post("challenge", "challengeCompleted", challengeComplete)];
                         case 1:
                             res = _a.sent();
                             if (res.data) {

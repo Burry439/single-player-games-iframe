@@ -23,7 +23,6 @@ var ReactSocketListener = /** @class */ (function () {
                 unitySocket: null
             });
             this.userId = this.roomData.userId;
-            this.socket.emit("gameReady");
         }
         else {
             this.socket.emit('isDuplicate');

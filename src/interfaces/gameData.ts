@@ -1,5 +1,7 @@
+import ChallengeData from "./challengeData";
+
 export interface GameData{
-    id : string
-    name : string
-    userId: string
+    _id : string
+    gameName : string
+    challenges : ChallengeData[]
 }
