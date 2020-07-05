@@ -25,8 +25,10 @@ export default class UnitySocketListener {
             this.socket.join(this.roomData.gameName + "/" + this.roomData.userId)
             this.socket.to(this.roomData.gameName + "/" + this.roomData.userId).emit("gameReady")
             this.socket.emit("reciveGameData", this.gameData)
+
             this.socket.on("challengeCompleted", async (challengeData : ChallengeData) =>{
             try{
+                console.log("challengeCompleted")
                 const challengeComplete : ChallengeComplete = {
                     userId : this.roomData.userId,
                     challenge : challengeData

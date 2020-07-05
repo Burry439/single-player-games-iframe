@@ -49,26 +49,22 @@ var UnitySocketListener = /** @class */ (function () {
         this.apiRequest = apiRequest_1.default.getApiRequestInstance();
         this.roomData = _roomData;
         this.gameData = _gameData;
-        //if thee are no avalible react clients
         if (!_roomData.userId) {
-            console.log("in if no id if");
             this.socket.emit("sendToErrorPage", {});
         }
         else {
             console.log("in else");
             this.gameInstance.addUnitySocketToGameConnection(_roomData, this.socket);
             this.socket.join(this.roomData.gameName + "/" + this.roomData.userId);
-            //tells only react
             this.socket.to(this.roomData.gameName + "/" + this.roomData.userId).emit("gameReady");
-            console.log("gameData: ", this.gameData);
             this.socket.emit("reciveGameData", this.gameData);
-            //send game info to unity client
             this.socket.on("challengeCompleted", function (challengeData) { return __awaiter(_this, void 0, void 0, function () {
                 var challengeComplete, res, e_1;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
                             _a.trys.push([0, 2, , 3]);
+                            console.log("challengeCompleted");
                             challengeComplete = {
                                 userId: this.roomData.userId,
                                 challenge: challengeData
@@ -79,9 +75,6 @@ var UnitySocketListener = /** @class */ (function () {
                             if (res.data) {
                                 //send to react
                                 this.socket.to(this.roomData.gameName + "/" + this.roomData.userId).emit("challengeCompleted", res.data);
-                            }
-                            else {
-                                console.log("challenge already completed");
                             }
                             return [3 /*break*/, 3];
                         case 2:
