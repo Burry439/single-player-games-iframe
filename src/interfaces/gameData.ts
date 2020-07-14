@@ -1,7 +1,7 @@
-import ChallengeData from "./challengeData";
+import Challenge from "./challenge";
 
 export interface GameData{
     _id : string
     gameName : string
-    challenges : ChallengeData[]
+    challenges : Challenge[]
 }

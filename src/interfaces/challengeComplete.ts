@@ -1,6 +1,6 @@
-import ChallengeData from "./challengeData";
+import Challenge from "./challenge";
 
 export default interface ChallengeComplete {
     userId : string,
-    challenge : ChallengeData
+    challenge : Challenge
 }

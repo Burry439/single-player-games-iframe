@@ -58,17 +58,12 @@ var UnitySocketListener = /** @class */ (function () {
             this.socket.join(this.roomData.gameName + "/" + this.roomData.userId);
             this.socket.to(this.roomData.gameName + "/" + this.roomData.userId).emit("gameReady");
             this.socket.emit("reciveGameData", this.gameData);
-            this.socket.on("challengeCompleted", function (challengeData) { return __awaiter(_this, void 0, void 0, function () {
-                var challengeComplete, res, e_1;
+            this.socket.on("challengeCompleted", function (challengeComplete) { return __awaiter(_this, void 0, void 0, function () {
+                var res, e_1;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
                             _a.trys.push([0, 2, , 3]);
-                            console.log("challengeCompleted");
-                            challengeComplete = {
-                                userId: this.roomData.userId,
-                                challenge: challengeData
-                            };
                             return [4 /*yield*/, this.apiRequest.post("challenge", "challengeCompleted", challengeComplete)];
                         case 1:
                             res = _a.sent();
@@ -79,6 +74,7 @@ var UnitySocketListener = /** @class */ (function () {
                             return [3 /*break*/, 3];
                         case 2:
                             e_1 = _a.sent();
+                            console.log("in error: " + e_1);
                             console.log(e_1);
                             return [3 /*break*/, 3];
                         case 3: return [2 /*return*/];

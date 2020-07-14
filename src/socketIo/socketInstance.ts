@@ -18,6 +18,7 @@ export default class SocketInstance {
     constructor(server : Server) {
         this.apiRequest = ApiRequest.getApiRequestInstance();
         this.io = socketIo(server)
+        
         this.io.on("connection", (socket : SocketIO.Socket) =>{
             console.log("connection")
 
