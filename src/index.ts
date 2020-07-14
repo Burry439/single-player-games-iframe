@@ -6,6 +6,7 @@ import dotenv from 'dotenv'
 import path from "path"
 import SocketInstance from "./socketIo/socketInstance";
 import RoomData from "./interfaces/roomData";
+import { gameConnection } from "./interfaces/gameConnection";
 dotenv.config()
 
 
@@ -55,10 +56,10 @@ class ExpressServer {
 }
 
 const sendErrorIframe = (roomData : RoomData) => {
-  const reactSocket = ExpressServer.socketInstance.gameInstance.getGameConnection(roomData)
-  console.log("reactSocket: " + reactSocket)
-  reactSocket.reactSocket.emit("gameReady")
-  
+  const gameConnection : gameConnection = ExpressServer.socketInstance.gameInstance.getGameConnection(roomData)
+  if(gameConnection){
+    gameConnection.reactSocket.emit("gameReady")
+  }
 }
 
 ExpressServer.initSerever()

@@ -45,9 +45,10 @@ var ExpressServer = /** @class */ (function () {
     return ExpressServer;
 }());
 var sendErrorIframe = function (roomData) {
-    var reactSocket = ExpressServer.socketInstance.gameInstance.getGameConnection(roomData);
-    console.log("reactSocket: " + reactSocket);
-    reactSocket.reactSocket.emit("gameReady");
+    var gameConnection = ExpressServer.socketInstance.gameInstance.getGameConnection(roomData);
+    if (gameConnection) {
+        gameConnection.reactSocket.emit("gameReady");
+    }
 };
 ExpressServer.initSerever();
 //# sourceMappingURL=index.js.map
