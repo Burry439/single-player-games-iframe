@@ -23,11 +23,17 @@ var ExpressServer = /** @class */ (function () {
             console.log("here");
         });
         this.app.get("*", function (req, res) {
+            var gameName = req.originalUrl.substring(0, req.originalUrl.indexOf('?')).replace(/[^a-zA-Z ]/g, "");
+            var userId = Object.keys(req.query)[0];
+            var roomData = { userId: userId, gameName: gameName };
+            setTimeout(function () {
+                sendErrorIframe(roomData);
+            }, 5000);
             res.sendFile(path_1.default.join("build/errorPage/error.html"), { root: process.env.ROOT_FOLDER });
         });
         this.server = http_1.default.createServer(this.app);
         this.server.listen(process.env.PORT || 8000);
-        this.socketInstance = socketInstance_1.default.getSocketInstance(this.server);
+        ExpressServer.socketInstance = socketInstance_1.default.getSocketInstance(this.server);
         console.log('=====================================');
         console.log('SERVER SETTINGS:');
         console.log("Server running at - localhost:8000");
@@ -38,5 +44,10 @@ var ExpressServer = /** @class */ (function () {
     };
     return ExpressServer;
 }());
+var sendErrorIframe = function (roomData) {
+    var reactSocket = ExpressServer.socketInstance.gameInstance.getGameConnection(roomData);
+    console.log("reactSocket: " + reactSocket);
+    reactSocket.reactSocket.emit("gameReady");
+};
 ExpressServer.initSerever();
 //# sourceMappingURL=index.js.map

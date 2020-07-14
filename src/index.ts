@@ -5,14 +5,14 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import path from "path"
 import SocketInstance from "./socketIo/socketInstance";
+import RoomData from "./interfaces/roomData";
 dotenv.config()
 
 
 class ExpressServer {
- // public socketInstance : SocketInstance;
   private app: express.Application;
   private server : Server;
-  public socketInstance : SocketInstance;
+  public static socketInstance : SocketInstance;
   constructor(){
     this.app  = express () 
     this.app.use ( bodyParser.json ( { 'limit' : '50mb' } ) )
@@ -28,12 +28,20 @@ class ExpressServer {
 
 
     this.app.get("*",(req,res) =>{
+      const gameName = req.originalUrl.substring(0, req.originalUrl.indexOf('?')).replace(/[^a-zA-Z ]/g, "")
+      const userId = Object.keys(req.query)[0]
+      const roomData : RoomData = {userId : userId, gameName : gameName}
+      setTimeout(() => {
+        sendErrorIframe(roomData)
+      }, 5000);
+      
+      
       res.sendFile(path.join("build/errorPage/error.html"),{ root: process.env.ROOT_FOLDER })
     })
 
     this.server  = http.createServer ( this.app )
     this.server.listen ( process.env.PORT || 8000)
-    this.socketInstance = SocketInstance.getSocketInstance(this.server) 
+    ExpressServer.socketInstance = SocketInstance.getSocketInstance(this.server) 
 
     console.log ( '=====================================' )
     console.log ( 'SERVER SETTINGS:' )
@@ -43,8 +51,14 @@ class ExpressServer {
 
   public static initSerever() : ExpressServer{
     return new ExpressServer()
+  }
 }
 
+const sendErrorIframe = (roomData : RoomData) => {
+  const reactSocket = ExpressServer.socketInstance.gameInstance.getGameConnection(roomData)
+  console.log("reactSocket: " + reactSocket)
+  reactSocket.reactSocket.emit("gameReady")
+  
 }
 
 ExpressServer.initSerever()

@@ -11,6 +11,16 @@ export default class Game {
         this.gameConnections = []
     }
 
+    public getGameConnection(roomData : RoomData) : gameConnection {
+        let _gameConnection : gameConnection
+        this.gameConnections.forEach((gameConnection) =>{
+            if(gameConnection.roomData.gameName == roomData.gameName && gameConnection.roomData.userId == roomData.userId){
+                _gameConnection = gameConnection
+            }
+        })
+        return _gameConnection
+    }
+
     public getGameConnections() : gameConnection[] {
         return this.gameConnections
     }

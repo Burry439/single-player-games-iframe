@@ -4,6 +4,15 @@ var Game = /** @class */ (function () {
     function Game() {
         this.gameConnections = [];
     }
+    Game.prototype.getGameConnection = function (roomData) {
+        var _gameConnection;
+        this.gameConnections.forEach(function (gameConnection) {
+            if (gameConnection.roomData.gameName == roomData.gameName && gameConnection.roomData.userId == roomData.userId) {
+                _gameConnection = gameConnection;
+            }
+        });
+        return _gameConnection;
+    };
     Game.prototype.getGameConnections = function () {
         return this.gameConnections;
     };
