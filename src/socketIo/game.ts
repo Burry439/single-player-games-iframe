@@ -1,18 +1,18 @@
 
-import { gameConnection } from "../interfaces/gameConnection";
+import { GameConnection } from "../interfaces/gameConnection";
 import RoomData from "../interfaces/roomData";
 
 export default class Game {
 
     private static GameInstance : Game;
    // private playerId : String;
-    private gameConnections : gameConnection[]
+    private gameConnections : GameConnection[]
     private constructor(){
         this.gameConnections = []
     }
 
-    public getGameConnection(roomData : RoomData) : gameConnection {
-        let _gameConnection : gameConnection
+    public getGameConnection(roomData : RoomData) : GameConnection {
+        let _gameConnection : GameConnection
         this.gameConnections.forEach((gameConnection) =>{
             if(gameConnection.roomData.gameName == roomData.gameName && gameConnection.roomData.userId == roomData.userId){
                 _gameConnection = gameConnection
@@ -21,16 +21,16 @@ export default class Game {
         return _gameConnection
     }
 
-    public getGameConnections() : gameConnection[] {
+    public getGameConnections() : GameConnection[] {
         return this.gameConnections
     }
 
-    public addGameConnection(gameConnection : gameConnection){
+    public addGameConnection(gameConnection : GameConnection){
         this.gameConnections.push(gameConnection);
     }
 
     public removeGameConnection(userId : string){
-        this.gameConnections.forEach((gameConnection : gameConnection, i : number) =>{
+        this.gameConnections.forEach((gameConnection : GameConnection, i : number) =>{
             if(gameConnection.roomData.userId == userId) {      
                 //remove the disconnected player player from players array
                 this.gameConnections.splice(i, 1)    
