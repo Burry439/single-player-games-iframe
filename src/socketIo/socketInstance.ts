@@ -28,7 +28,6 @@ export default class SocketInstance {
             })
 
             socket.on("UnityConnection",async (roomData : RoomData) =>{
-                console.log("unity connected")
                 const gameData : GameData = await this.getGameData(roomData.gameName)
                 new UnitySocketListener(socket, roomData, gameData)
             })

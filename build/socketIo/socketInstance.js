@@ -60,9 +60,7 @@ var SocketInstance = /** @class */ (function () {
                 var gameData;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0:
-                            console.log("unity connected");
-                            return [4 /*yield*/, this.getGameData(roomData.gameName)];
+                        case 0: return [4 /*yield*/, this.getGameData(roomData.gameName)];
                         case 1:
                             gameData = _a.sent();
                             new unitySocketListener_1.default(socket, roomData, gameData);

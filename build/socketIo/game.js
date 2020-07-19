@@ -13,6 +13,15 @@ var Game = /** @class */ (function () {
         });
         return _gameConnection;
     };
+    Game.prototype.checkReactConnectionExists = function (roomData) {
+        var exists = false;
+        this.gameConnections.forEach(function (gameConnection) {
+            if (gameConnection.roomData.gameName == roomData.gameName && gameConnection.roomData.userId == roomData.userId && gameConnection.reactSocket !== null) {
+                exists = true;
+            }
+        });
+        return exists;
+    };
     Game.prototype.getGameConnections = function () {
         return this.gameConnections;
     };

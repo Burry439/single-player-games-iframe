@@ -16,7 +16,7 @@ export default class UnitySocketListener {
         this.apiRequest = ApiRequest.getApiRequestInstance(); 
         this.roomData = _roomData;
         this.gameData = _gameData
-        if(!_roomData.userId){
+        if(!this.gameInstance.getGameConnection(this.roomData)){
             this.socket.emit("sendToErrorPage",{})
         } else {
             console.log("in else")

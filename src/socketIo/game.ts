@@ -21,6 +21,16 @@ export default class Game {
         return _gameConnection
     }
 
+    public checkReactConnectionExists(roomData : RoomData){
+        let exists : Boolean = false
+        this.gameConnections.forEach((gameConnection) =>{
+            if(gameConnection.roomData.gameName == roomData.gameName && gameConnection.roomData.userId == roomData.userId && gameConnection.reactSocket !== null){
+                exists = true
+            }
+        })
+        return exists
+    }
+
     public getGameConnections() : GameConnection[] {
         return this.gameConnections
     }
