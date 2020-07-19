@@ -24,7 +24,7 @@ export default class Game {
     public checkReactConnectionExists(roomData : RoomData){
         let exists : Boolean = false
         this.gameConnections.forEach((gameConnection) =>{
-            if(gameConnection.roomData.gameName == roomData.gameName && gameConnection.roomData.userId == roomData.userId && gameConnection.reactSocket !== null){
+            if(gameConnection.roomData.gameName == roomData.gameName && gameConnection.roomData.userId == roomData.userId && gameConnection.reactSocket !== null && gameConnection.unitySocket == null){
                 exists = true
             }
         })
@@ -57,10 +57,10 @@ export default class Game {
         }        
     }
 
-    public isDuplicate(userId : string){
+    public isDuplicate(roomData : RoomData){
         let isDuplicate = false
         this.gameConnections.forEach((gameConnection) =>{
-            if(gameConnection.roomData.userId == userId){
+            if(gameConnection.roomData.userId == roomData.userId && gameConnection.roomData.gameName == roomData.gameName){
                 return isDuplicate = true;
             }
         })

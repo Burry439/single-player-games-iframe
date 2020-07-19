@@ -16,7 +16,7 @@ var Game = /** @class */ (function () {
     Game.prototype.checkReactConnectionExists = function (roomData) {
         var exists = false;
         this.gameConnections.forEach(function (gameConnection) {
-            if (gameConnection.roomData.gameName == roomData.gameName && gameConnection.roomData.userId == roomData.userId && gameConnection.reactSocket !== null) {
+            if (gameConnection.roomData.gameName == roomData.gameName && gameConnection.roomData.userId == roomData.userId && gameConnection.reactSocket !== null && gameConnection.unitySocket == null) {
                 exists = true;
             }
         });
@@ -45,10 +45,10 @@ var Game = /** @class */ (function () {
             this.gameConnections[foundIndex].unitySocket = socket;
         }
     };
-    Game.prototype.isDuplicate = function (userId) {
+    Game.prototype.isDuplicate = function (roomData) {
         var isDuplicate = false;
         this.gameConnections.forEach(function (gameConnection) {
-            if (gameConnection.roomData.userId == userId) {
+            if (gameConnection.roomData.userId == roomData.userId && gameConnection.roomData.gameName == roomData.gameName) {
                 return isDuplicate = true;
             }
         });
