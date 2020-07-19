@@ -49,7 +49,7 @@ var UnitySocketListener = /** @class */ (function () {
         this.apiRequest = apiRequest_1.default.getApiRequestInstance();
         this.roomData = _roomData;
         this.gameData = _gameData;
-        if (!this.gameInstance.getGameConnection(this.roomData) || !this.gameInstance.isDuplicate(this.roomData.userId)) {
+        if (!this.gameInstance.getGameConnection(this.roomData) || this.gameInstance.isDuplicate(this.roomData.userId)) {
             this.socket.emit("sendToErrorPage", {});
         }
         else {
