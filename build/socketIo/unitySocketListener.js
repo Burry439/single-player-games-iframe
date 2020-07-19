@@ -49,7 +49,7 @@ var UnitySocketListener = /** @class */ (function () {
         this.apiRequest = apiRequest_1.default.getApiRequestInstance();
         this.roomData = _roomData;
         this.gameData = _gameData;
-        if (this.gameInstance.checkReactConnectionExists(this.roomData)) {
+        if (!this.gameInstance.checkReactConnectionExists(this.roomData)) {
             this.socket.emit("sendToErrorPage", {});
         }
         else {

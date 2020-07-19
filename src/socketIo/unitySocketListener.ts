@@ -16,7 +16,7 @@ export default class UnitySocketListener {
         this.apiRequest = ApiRequest.getApiRequestInstance(); 
         this.roomData = _roomData;
         this.gameData = _gameData
-        if(this.gameInstance.checkReactConnectionExists(this.roomData)){
+        if(!this.gameInstance.checkReactConnectionExists(this.roomData)){
             this.socket.emit("sendToErrorPage",{})
         } else {
             console.log("in else")
