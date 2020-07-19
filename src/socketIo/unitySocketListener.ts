@@ -16,7 +16,7 @@ export default class UnitySocketListener {
         this.apiRequest = ApiRequest.getApiRequestInstance(); 
         this.roomData = _roomData;
         this.gameData = _gameData
-        if(!this.gameInstance.getGameConnection(this.roomData)){
+        if(!this.gameInstance.getGameConnection(this.roomData) || !this.gameInstance.isDuplicate(this.roomData.userId)){
             this.socket.emit("sendToErrorPage",{})
         } else {
             console.log("in else")
