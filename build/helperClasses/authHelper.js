@@ -8,6 +8,7 @@ var AuthHelper = /** @class */ (function () {
     function AuthHelper() {
     }
     AuthHelper.authenticateGameRequest = function (req, res, next) {
+        console.log(req.session);
         var token = req.session.jwt;
         console.log(req.headers.referer);
         if (req.headers.referer == undefined) {
