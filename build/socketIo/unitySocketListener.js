@@ -53,7 +53,6 @@ var UnitySocketListener = /** @class */ (function () {
             this.socket.emit("sendToErrorPage", {});
         }
         else {
-            console.log("in else");
             this.gameInstance.addUnitySocketToGameConnection(_roomData, this.socket);
             this.socket.join(this.roomData.gameName + "/" + this.roomData.userId);
             this.socket.to(this.roomData.gameName + "/" + this.roomData.userId).emit("gameReady");
@@ -74,7 +73,6 @@ var UnitySocketListener = /** @class */ (function () {
                             return [3 /*break*/, 3];
                         case 2:
                             e_1 = _a.sent();
-                            console.log("in error: " + e_1);
                             console.log(e_1);
                             return [3 /*break*/, 3];
                         case 3: return [2 /*return*/];

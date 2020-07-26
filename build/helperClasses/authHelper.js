@@ -10,13 +10,19 @@ var AuthHelper = /** @class */ (function () {
     AuthHelper.authenticateGameRequest = function (req, res, next) {
         var token = req.session.jwt;
         console.log(req.headers.referer);
-        if (req.headers.referer == undefined)
+        if (req.headers.referer == undefined) {
+            console.log("referr error");
             return res.sendStatus(401);
-        if (token == null)
+        }
+        if (token == null) {
+            console.log("no token");
             return res.sendStatus(401);
+        }
         jsonwebtoken_1.default.verify(token, process.env.ACCESS_TOKEN_SECRET, function (err, user) {
-            if (err)
-                return res.sendStatus(403);
+            if (err) {
+                console.log("token error");
+            }
+            return res.sendStatus(403);
             //req.user = user
             next();
         });

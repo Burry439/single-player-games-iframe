@@ -19,7 +19,6 @@ export default class UnitySocketListener {
         if(!this.gameInstance.checkReactConnectionExists(this.roomData)){
             this.socket.emit("sendToErrorPage",{})
         } else {
-            console.log("in else")
             this.gameInstance.addUnitySocketToGameConnection(_roomData, this.socket);
             this.socket.join(this.roomData.gameName + "/" + this.roomData.userId)
             this.socket.to(this.roomData.gameName + "/" + this.roomData.userId).emit("gameReady")
@@ -33,7 +32,6 @@ export default class UnitySocketListener {
                     this.socket.to(this.roomData.gameName + "/" + this.roomData.userId).emit("challengeCompleted", res.data)
                 }
             }catch(e){
-                console.log("in error: " + e)
                 console.log(e)
             }
             })
