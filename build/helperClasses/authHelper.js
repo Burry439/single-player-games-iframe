@@ -21,8 +21,8 @@ var AuthHelper = /** @class */ (function () {
         jsonwebtoken_1.default.verify(token, process.env.ACCESS_TOKEN_SECRET, function (err, user) {
             if (err) {
                 console.log("token error");
+                return res.sendStatus(403);
             }
-            return res.sendStatus(403);
             //req.user = user
             next();
         });

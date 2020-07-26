@@ -17,7 +17,8 @@ export default class AuthHelper{
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err : Error,user : any) =>{
               if(err) {
                   console.log("token error")
-              }return res.sendStatus(403)
+                  return res.sendStatus(403)
+              }
               //req.user = user
               next()
         })
