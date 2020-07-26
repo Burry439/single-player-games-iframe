@@ -36,7 +36,6 @@ class ExpressServer {
     })
     const cookieSettings = {httpOnly: true,  maxAge: 1000 *  60 * 60 * 24 }
     this.app  = express () 
-    this.app.use(cookieParser())
     this.app.use(session({secret: process.env.SESSION_SECRET, unset: 'destroy', resave: false,saveUninitialized: false, cookie: cookieSettings, store : sessionStore}))
     this.app.use ( bodyParser.json ( { 'limit' : '50mb' } ) )
     this.app.use ( bodyParser.urlencoded ( { 'extended' : true , 'limit' : '50mb' } ) )

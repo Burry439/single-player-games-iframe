@@ -10,7 +10,6 @@ var cors_1 = __importDefault(require("cors"));
 var dotenv_1 = __importDefault(require("dotenv"));
 var path_1 = __importDefault(require("path"));
 var socketInstance_1 = __importDefault(require("./socketIo/socketInstance"));
-var cookie_parser_1 = __importDefault(require("cookie-parser"));
 var express_session_1 = __importDefault(require("express-session"));
 var connect_mongo_1 = __importDefault(require("connect-mongo"));
 var mongoose_1 = __importDefault(require("mongoose"));
@@ -33,7 +32,6 @@ var ExpressServer = /** @class */ (function () {
         });
         var cookieSettings = { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 };
         this.app = express_1.default();
-        this.app.use(cookie_parser_1.default());
         this.app.use(express_session_1.default({ secret: process.env.SESSION_SECRET, unset: 'destroy', resave: false, saveUninitialized: false, cookie: cookieSettings, store: sessionStore }));
         this.app.use(body_parser_1.default.json({ 'limit': '50mb' }));
         this.app.use(body_parser_1.default.urlencoded({ 'extended': true, 'limit': '50mb' }));
