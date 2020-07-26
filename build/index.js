@@ -37,7 +37,7 @@ var ExpressServer = /** @class */ (function () {
         this.app.use(express_session_1.default({ secret: process.env.SESSION_SECRET, unset: 'destroy', resave: false, saveUninitialized: false, cookie: cookieSettings, store: sessionStore }));
         this.app.use(body_parser_1.default.json({ 'limit': '50mb' }));
         this.app.use(body_parser_1.default.urlencoded({ 'extended': true, 'limit': '50mb' }));
-        this.app.use(cors_1.default({ 'origin': '*', 'methods': ['*', 'DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST'], 'allowedHeaders': ['*', 'authorization', 'content-type'] }));
+        this.app.use(cors_1.default({ 'methods': ['*', 'DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST'], 'allowedHeaders': ['*', 'authorization', 'content-type'] }));
         //this.app.use(this.router)
         this.app.use('/', authHelper_1.default.authenticateGameRequest, express_1.default.static('build/games'));
         this.app.get("*", function (req, res) {

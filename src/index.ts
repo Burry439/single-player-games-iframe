@@ -43,7 +43,7 @@ class ExpressServer {
     this.app.use(session({secret: process.env.SESSION_SECRET, unset: 'destroy', resave: false,saveUninitialized: false, cookie: cookieSettings, store : sessionStore}))
     this.app.use ( bodyParser.json ( { 'limit' : '50mb' } ) )
     this.app.use ( bodyParser.urlencoded ( { 'extended' : true , 'limit' : '50mb' } ) )
-    this.app.use ( cors ( { 'origin' : '*' , 'methods' : [ '*' , 'DELETE' , 'GET' , 'OPTIONS' , 'PATCH' , 'POST' ] , 'allowedHeaders' : [ '*' , 'authorization' , 'content-type' ] } ) )
+    this.app.use ( cors ( { 'methods' : [ '*' , 'DELETE' , 'GET' , 'OPTIONS' , 'PATCH' , 'POST' ] , 'allowedHeaders' : [ '*' , 'authorization' , 'content-type' ] } ) )
     //this.app.use(this.router)
 
 
