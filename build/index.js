@@ -30,6 +30,8 @@ var ExpressServer = /** @class */ (function () {
             mongooseConnection: mongoose_1.default.connection,
             collection: "sessions"
         });
+        console.log("process.env.MONGODB_URI : " + process.env.MONGODB_URI);
+        console.log("process.env.SESSION_SECRET : " + process.env.SESSION_SECRET);
         var cookieSettings = { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 };
         this.app = express_1.default();
         this.app.use(express_session_1.default({ secret: process.env.SESSION_SECRET, unset: 'destroy', resave: false, saveUninitialized: false, cookie: cookieSettings, store: sessionStore }));
