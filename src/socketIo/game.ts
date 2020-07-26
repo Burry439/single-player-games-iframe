@@ -39,9 +39,9 @@ export default class Game {
         this.gameConnections.push(gameConnection);
     }
 
-    public removeGameConnection(userId : string){
+    public removeGameConnection(roomData : RoomData){
         this.gameConnections.forEach((gameConnection : GameConnection, i : number) =>{
-            if(gameConnection.roomData.userId == userId) {      
+            if(gameConnection.roomData.userId == roomData.userId && gameConnection.roomData.gameName == roomData.gameName) {      
                 //remove the disconnected player player from players array
                 this.gameConnections.splice(i, 1)    
             }
@@ -58,10 +58,11 @@ export default class Game {
     }
 
     public isDuplicate(roomData : RoomData){
+        console.log( this.getGameConnections())
         let isDuplicate = false
-        this.gameConnections.forEach((gameConnection) =>{
+        this.getGameConnections().forEach((gameConnection) =>{
             if(gameConnection.roomData.userId == roomData.userId && gameConnection.roomData.gameName == roomData.gameName){
-                return isDuplicate = true;
+                isDuplicate = true;
             }
         })
 

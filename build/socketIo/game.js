@@ -28,10 +28,10 @@ var Game = /** @class */ (function () {
     Game.prototype.addGameConnection = function (gameConnection) {
         this.gameConnections.push(gameConnection);
     };
-    Game.prototype.removeGameConnection = function (userId) {
+    Game.prototype.removeGameConnection = function (roomData) {
         var _this = this;
         this.gameConnections.forEach(function (gameConnection, i) {
-            if (gameConnection.roomData.userId == userId) {
+            if (gameConnection.roomData.userId == roomData.userId && gameConnection.roomData.gameName == roomData.gameName) {
                 //remove the disconnected player player from players array
                 _this.gameConnections.splice(i, 1);
             }
@@ -46,10 +46,11 @@ var Game = /** @class */ (function () {
         }
     };
     Game.prototype.isDuplicate = function (roomData) {
+        console.log(this.getGameConnections());
         var isDuplicate = false;
-        this.gameConnections.forEach(function (gameConnection) {
+        this.getGameConnections().forEach(function (gameConnection) {
             if (gameConnection.roomData.userId == roomData.userId && gameConnection.roomData.gameName == roomData.gameName) {
-                return isDuplicate = true;
+                isDuplicate = true;
             }
         });
         return isDuplicate;

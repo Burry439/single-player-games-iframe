@@ -10,18 +10,36 @@ var cors_1 = __importDefault(require("cors"));
 var dotenv_1 = __importDefault(require("dotenv"));
 var path_1 = __importDefault(require("path"));
 var socketInstance_1 = __importDefault(require("./socketIo/socketInstance"));
+var cookie_parser_1 = __importDefault(require("cookie-parser"));
+var express_session_1 = __importDefault(require("express-session"));
+var connect_mongo_1 = __importDefault(require("connect-mongo"));
+var mongoose_1 = __importDefault(require("mongoose"));
+var authHelper_1 = __importDefault(require("./helperClasses/authHelper"));
 dotenv_1.default.config();
 var ExpressServer = /** @class */ (function () {
     function ExpressServer() {
+        var MongoStore = connect_mongo_1.default(express_session_1.default);
+        var options = {
+            useNewUrlParser: true,
+            useCreateIndex: true,
+            autoIndex: true,
+            useFindAndModify: false,
+            useUnifiedTopology: true
+        };
+        mongoose_1.default.connect(process.env.MONGODB_URI, options);
+        var sessionStore = new MongoStore({
+            mongooseConnection: mongoose_1.default.connection,
+            collection: "sessions"
+        });
+        var cookieSettings = { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 };
         this.app = express_1.default();
+        this.app.use(cookie_parser_1.default());
+        this.app.use(express_session_1.default({ secret: process.env.SESSION_SECRET, unset: 'destroy', resave: false, saveUninitialized: false, cookie: cookieSettings, store: sessionStore }));
         this.app.use(body_parser_1.default.json({ 'limit': '50mb' }));
         this.app.use(body_parser_1.default.urlencoded({ 'extended': true, 'limit': '50mb' }));
         this.app.use(cors_1.default({ 'origin': '*', 'methods': ['*', 'DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST'], 'allowedHeaders': ['*', 'authorization', 'content-type'] }));
         //this.app.use(this.router)
-        this.app.use('/', express_1.default.static('build/games'));
-        this.app.get("/game/cubeGame", function (req, res) {
-            console.log("here");
-        });
+        this.app.use('/', authHelper_1.default.authenticateGameRequest, express_1.default.static('build/games'));
         this.app.get("*", function (req, res) {
             var gameName = req.originalUrl.substring(0, req.originalUrl.indexOf('?')).replace(/[^a-zA-Z ]/g, "");
             var userId = Object.keys(req.query)[0];

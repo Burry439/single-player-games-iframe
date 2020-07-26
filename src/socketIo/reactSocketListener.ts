@@ -11,8 +11,9 @@ export default class ReactSocketListener {
         this.socket = _socket
         this.roomData = _roomData
         this.gameInstance = Game.getGameInstance()
-
+        console.log(this.socket.rooms)
         if(!this.gameInstance.isDuplicate(this.roomData)){
+            console.log("not duplicate")
             console.log(this.roomData.gameName + "/" + this.roomData.userId)
             this.socket.join(this.roomData.gameName + "/" + this.roomData.userId)
             this.gameInstance.addGameConnection({
@@ -24,14 +25,17 @@ export default class ReactSocketListener {
                 unitySocket : null
             })
             this.userId = this.roomData.userId;
+            console.log(this.gameInstance.getGameConnection(this.roomData))
         } else {
             this.socket.emit('isDuplicate')
+            this.socket.disconnect()
         }
 
  
 
         this.socket.on("disconnect",() =>{
-            this.gameInstance.removeGameConnection(this.userId)
+            console.log("disconnect in react")
+            this.gameInstance.removeGameConnection(this.roomData)
         })
     }
 }

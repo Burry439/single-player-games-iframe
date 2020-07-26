@@ -31,6 +31,8 @@ export default class SocketInstance {
                 const gameData : GameData = await this.getGameData(roomData.gameName)
                 new UnitySocketListener(socket, roomData, gameData)
             })
+
+            
         })
     }
 
