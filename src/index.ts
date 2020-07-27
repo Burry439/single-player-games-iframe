@@ -38,7 +38,7 @@ class ExpressServer {
     console.log("process.env.MONGODB_URI : " + process.env.MONGODB_URI)
     console.log("process.env.SESSION_SECRET : " + process.env.SESSION_SECRET)
 
-    const cookieSettings = {httpOnly: true,  maxAge: 1000 *  60 * 60 * 24 }
+    const cookieSettings = {httpOnly: true,  maxAge: 1000 *  60 * 60 * 24, domain : "test" }
     this.app  = express () 
     this.app.use(session({secret: process.env.SESSION_SECRET, unset: 'destroy', resave: false,saveUninitialized: false, cookie: cookieSettings, store : sessionStore}))
     this.app.use ( bodyParser.json ( { 'limit' : '50mb' } ) )

@@ -32,7 +32,7 @@ var ExpressServer = /** @class */ (function () {
         });
         console.log("process.env.MONGODB_URI : " + process.env.MONGODB_URI);
         console.log("process.env.SESSION_SECRET : " + process.env.SESSION_SECRET);
-        var cookieSettings = { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 };
+        var cookieSettings = { httpOnly: true, maxAge: 1000 * 60 * 60 * 24, domain: "test" };
         this.app = express_1.default();
         this.app.use(express_session_1.default({ secret: process.env.SESSION_SECRET, unset: 'destroy', resave: false, saveUninitialized: false, cookie: cookieSettings, store: sessionStore }));
         this.app.use(body_parser_1.default.json({ 'limit': '50mb' }));

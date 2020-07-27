@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken"
 export default class AuthHelper{
     
     public static  authenticateGameRequest = (req: Request, res: Response, next: NextFunction) =>{
-        console.log(req.session)
+        console.log(req)
         const token : string =  req.session.jwt
         console.log(req.headers.referer)
         if(req.headers.referer == undefined){
