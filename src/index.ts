@@ -47,7 +47,7 @@ class ExpressServer {
     //this.app.use(this.router)
 
 
-     this.app.use( '/', AuthHelper.authenticateGameRequest, express.static('build/games'))
+     this.app.use( '/', express.static('build/games'))
 
 
     this.app.get("*",(req,res) =>{

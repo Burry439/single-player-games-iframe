@@ -13,7 +13,6 @@ var socketInstance_1 = __importDefault(require("./socketIo/socketInstance"));
 var express_session_1 = __importDefault(require("express-session"));
 var connect_mongo_1 = __importDefault(require("connect-mongo"));
 var mongoose_1 = __importDefault(require("mongoose"));
-var authHelper_1 = __importDefault(require("./helperClasses/authHelper"));
 dotenv_1.default.config();
 var ExpressServer = /** @class */ (function () {
     function ExpressServer() {
@@ -39,7 +38,7 @@ var ExpressServer = /** @class */ (function () {
         this.app.use(body_parser_1.default.urlencoded({ 'extended': true, 'limit': '50mb' }));
         this.app.use(cors_1.default({ 'methods': ['*', 'DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST'], 'allowedHeaders': ['*', 'authorization', 'content-type'] }));
         //this.app.use(this.router)
-        this.app.use('/', authHelper_1.default.authenticateGameRequest, express_1.default.static('build/games'));
+        this.app.use('/', express_1.default.static('build/games'));
         this.app.get("*", function (req, res) {
             var gameName = req.originalUrl.substring(0, req.originalUrl.indexOf('?')).replace(/[^a-zA-Z ]/g, "");
             var userId = Object.keys(req.query)[0];
